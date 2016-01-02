@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+    <title>Learning jQuery</title>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+   	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+
+<body>
+
+<style type="text/css">
+
+	#wrapper {
+		width:600px;
+		margin:0 auto; /* to center this div */
+		padding:50px;
+		font-family: helvetica;
+		font-size:1.2em;
+	}
+
+	input {
+		height:30px;
+		width: 300px;
+		padding:7px;
+		border-radius:5px;
+		font-size: 1.2em;
+		border:1px solid gray;
+		margin-bottom:10px; 
+	}
+	label {
+		width:150px;
+		float:left;
+		padding-top:7px;
+	}
+
+	#submitButton {
+		height:30px;
+		margin-left:150px;
+		width:70px;
+		font-size:0.8em;
+	}
+	#error {
+		margin:0px 10px 20px 0px;
+		font-size:1.1em;
+		color:red;
+	}
+</style>
+	<div id="wrapper">
+
+		<div id="error"></div>
+
+		<form id="validationForm">
+			<label for="email">Email</label>
+			<input name="email" id="email" />
+
+			<label for="phone">Telephone</label>
+			<input name="phone" id="phone"/>
+
+			<label for="pass">Password</label>
+			<input name="pass" type="password" id="password"/>
+			
+			<label for="pass">Confirm Password</label>
+			<input name="pass" type="password" id="confirmPassword"/>
+
+			<input id= "submitButton" type="submit" value="Submit"/>
+
+		</form>
+	</div>
+
+<script>
+	$("#validationForm").submit(function(event){
+
+		var errorMessage=""; // setting the error message to null, will be added to if one of the forms is filled incorrectly
+
+		event.preventDefault();
+
+		// function to check if entered email is valid
+
+		function isValidEmailAddress(emailAddress) {
+    	
+    	var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
+    		
+    		return pattern.test(emailAddress);
+		};
+
+		// checking each form to see if they are valid
+
+			// checks that enter entered is valid by seeing if email id email validating function returned value
+		if (!isValidEmailAddress($("#email").val())){
+			
+			errorMessage = "<br/>Please enter a valid email address."; 
+
+		}
+		if (!$.isNumeric($("#phone").val())){
+			errorMessage = errorMessage + "<br/>Please enter a valid phone.";
+		}
+			// check to see if passwords confirm
+		if ($("#password").val() != $("#confirmPassword").val()){
+			errorMessage = errorMessage + "<br/>Please enter matching passwords.";
+		}
+
+		// displaying message after entering information in the form
+
+		// if everything entered is considered valid, alert submitted
+		if (errorMessage == "") {
+
+			alert ("Submitted");
+
+		} else {
+
+		$("#error").html(errorMessage);
+
+		}
+	});
+
+
+</script>
+
+</body>
+</html>
